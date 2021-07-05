@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+
+int32_t main(int32_t argc, char* argv[]) {
+    /* fast input-output */
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+
+    /* get number */
+    int32_t N;std::cin >> N;
+
+    /* evaluate factors_of_N */
+    int32_t total_distinct_factors{0};
+
+    /* store factors_of_N into queue which
+     * lies in range [1, std::sqrt(N)] */
+    std::queue<int32_t> q;
+
+    /* store factors_of_N into stack which
+     * lies in range (std::sqrt(N), N] */
+    std::stack<int32_t> s;
+
+    for (int32_t i{1};i*i <= N;i++) {
+        if (N % i == 0) {
+            if (i == N/i) {
+                /* if N is a perfect square */
+                total_distinct_factors += 1;
+                q.push(i);
+            } else {
+                total_distinct_factors += 2;
+                q.push(i);s.push(N/i);
+            }
+        }
+    }
+
+    /* print message */
+    std::cout << total_distinct_factors << "\n";
+
+    /* print factors_of_N which lies
+     * in range [1, std::sqrt(N)] */
+    while (!q.empty()) {
+        std::cout << q.front() << " ";
+        q.pop();
+    }
+
+    /* print factors_of_N which lies
+     * in range (std::sqrt(N), N] */
+    while (!s.empty()) {
+        std::cout << s.top() << " ";
+        s.pop();
+    }
+    return 0;
+}
